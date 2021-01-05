@@ -151,50 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         queue = Volley.newRequestQueue(this);
-        //leagues("https://api.football-data.org/v2/competitions/CL/matches",listView,"CL"); //Champions League
-
-        //https://api.football-data.org/v2/matches Today's Matches
-        //https://api.football-data.org/v2/matches?competitions=CL&dateFrom=2020-08-16&dateTo=2020-08-22 Day to day
-
-
-          /*spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-              @Override
-              public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                  if (i == 0) {
-                      leagues("https://api.football-data.org/v2/matches?competitions=CL&dateFrom=2020-08-23&dateTo=2020-08-23", listView, "CL");
-                      listView.setVisibility(View.VISIBLE);
-                      calendarView.setVisibility(View.INVISIBLE);
-                  } else if (i == 1) {
-                      leagues("https://api.football-data.org/v2/matches?competitions=PL&" + todayDate[0], listView, "PL");
-                      listView.setVisibility(View.VISIBLE);
-                      calendarView.setVisibility(View.INVISIBLE);
-                  } else if (i == 2) {
-                      leagues("https://api.football-data.org/v2/competitions/SA/matches", listView, "SA");
-                      listView.setVisibility(View.VISIBLE);
-                      calendarView.setVisibility(View.INVISIBLE);
-                  } else if (i == 3) {
-                      leagues("https://api.football-data.org/v2/competitions/PD/matches", listView, "PD");
-                      listView.setVisibility(View.VISIBLE);
-                      calendarView.setVisibility(View.INVISIBLE);
-                  } else if (i == 4) {
-                      leagues("https://api.football-data.org/v2/competitions/BL1/matches", listView, "BL1");
-                      listView.setVisibility(View.VISIBLE);
-                      calendarView.setVisibility(View.INVISIBLE);
-                  } else if (i == 5) {
-                      leagues("https://api.football-data.org/v2/competitions/FL1/matches", listView, "FL1");
-                      listView.setVisibility(View.VISIBLE);
-                      calendarView.setVisibility(View.INVISIBLE);
-                  }
-              }
-
-              @Override
-              public void onNothingSelected(AdapterView<?> adapterView) {
-
-
-              }
-          });
-      */
+       
 
         ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(MainActivity.this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, arrayLeagues);
@@ -209,41 +166,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-       /* calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month,
-                                            int date) {
-
-                String stringDate = ""+date;
-                String stringMonth = ""+(month+1);
-                if(date<10) {
-                    stringDate = "0" + date;
-                }
-                if(month<10){
-                    stringMonth = "0" + (month+1);
-                }
-
-                    String dateSelected = year + "-" + stringMonth + "-" + stringDate;
-                    textView.setText(dateSelected);
-                    String urlDate= "dateFrom=" + dateSelected + "&dateTo=" + dateSelected;
-                    String url = "https://api.football-data.org/v2/matches?competitions=PL&"+urlDate;
-                    calendarView.setVisibility(View.INVISIBLE);
-                    listView.setVisibility(View.VISIBLE);
-                    leagues(url,listView,"CL");
-
-
-            }
-        });*/
-
+       
     }
 private void leagues(String url, final ListView listView, final String leagueName) {
         queue = Volley.newRequestQueue(this);
-        //final ListView listView = (ListView) findViewById(R.id.listView1);
-
-        //final TextView textView = (TextView) findViewById(R.id.textView);
-        //final TextView textView2 = (TextView) findViewById(R.id.textView2);
-
+        
 
 
         final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
