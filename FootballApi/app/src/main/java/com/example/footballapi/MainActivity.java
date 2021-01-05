@@ -237,7 +237,101 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
     }
+private void leagues(String url, final ListView listView, final String leagueName) {
+        queue = Volley.newRequestQueue(this);
+        //final ListView listView = (ListView) findViewById(R.id.listView1);
 
+        //final TextView textView = (TextView) findViewById(R.id.textView);
+        //final TextView textView2 = (TextView) findViewById(R.id.textView2);
+
+
+
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        //textView.setText("Response: " + response);
+                        JSONArray arr = null;
+
+                        try {
+                            arr = response.getJSONArray("matches");
+
+                            String[] homeTeams = new String[arr.length()];
+                            String[] awayTeams = new String[arr.length()];
+                            String[] scoreHomeTeam = new String[arr.length()];
+                            String[] scoreAwayTeam = new String[arr.length()];
+                            String[] matches = new String[arr.length()];
+                            String[] result = new String[arr.length()];
+
+
+                            for (int i = 0; i < arr.length(); i++) {
+                                JSONObject item = arr.getJSONObject(i);
+                                JSONObject homeTeamJson = item.getJSONObject("homeTeam");
+                                JSONObject awayTeamJson = item.getJSONObject("awayTeam");
+                                JSONObject scoreJson = item.getJSONObject("score");
+                                JSONObject scoreFullTimeJson = scoreJson.getJSONObject("fullTime");
+
+
+                                result[i] = arr.getJSONObject(i).getString("status");
+                                homeTeams[i] = homeTeamJson.getString("name");
+                                awayTeams[i] = awayTeamJson.getString("name");
+                                scoreHomeTeam[i] = scoreFullTimeJson.getString("homeTeam");
+                                scoreAwayTeam[i] = scoreFullTimeJson.getString("awayTeam");
+
+                                if (scoreHomeTeam[i] == "null") {
+                                    matches[i] = homeTeams[i] + " " + "" + "-" + "" + " " + awayTeams[i] + " | " + result[i];
+                                } else {
+                                    matches[i] = homeTeams[i] + " " + scoreHomeTeam[i] + "-" + scoreAwayTeam[i] + " " + awayTeams[i] + " | " + result[i];
+                                }
+                            }
+
+
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
+                                    android.R.layout.simple_list_item_1, android.R.id.text1, matches){
+
+
+                                @Override
+                                public View getView(int position, View convertView, ViewGroup parent) {
+
+                                    View view = super.getView(position, convertView, parent);
+                                    TextView text = (TextView) view.findViewById(android.R.id.text1);
+
+                                    //if (leagueName == "CL" || leagueName == "PL")
+                                        text.setTextColor(Color.WHITE);
+                                    return view;
+                                }
+                            };
+
+                            listView.setAdapter(adapter);
+
+                            //textView.setText(homeTeams[1]);
+                            //textView2.setText(awayTeams[i]);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("X-Auth-Token", "5756451bf1374656a97b33783aedec74");
+                return params;
+            }
+        };
+
+        queue.add(jsonObjectRequest);
+
+    }
 
 
 
